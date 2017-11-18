@@ -290,11 +290,20 @@ function generateQuestion() {
 
 
 function generateOptions() {
-   const randomKeys = _.shuffle(allKeys).slice(0, 10);
-   randomKeys.forEach(key => {
+   const randomKeys = _.shuffle(allKeys).slice(0, 2);
+
+   if (!randomKeys.includes(currentKey)) {
+       randomKeys.push(currentKey);
+   }
+   
+   randomKeys.forEach((key, i) => {
        let node = document.createElement("SPAN"); 
        node.textContent = key;
-       node.className = 'option';
+        if (i % 2 == 0) {
+            node.className = 'option';
+        } else {
+            node.className = 'option';
+        }
        optionsField.appendChild(node);
    });
 }

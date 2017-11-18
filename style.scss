@@ -1,0 +1,219 @@
+$fontFamily: 'Open Sans', sans-serif;
+$white: #FFF;
+$lightBlue: #55B0A7;
+
+body {
+    background-image: url('background.jpeg');
+    background-color: #FFFFD3;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-weight: 200;
+  }
+
+  .header {
+    width: 75%;
+     svg {
+      transform: translateX(55%);
+     }
+     text {
+      font-weight: 300;
+      font-family: $fontFamily;
+      font-size: 1.75rem;
+      fill: #FFF;
+    }
+  }
+
+  .quiz-container {
+    position: relative;
+    margin: 0 auto;
+    width: 50%;
+    padding: 20px 30px;
+    background: rgba($white, 0.85);
+    box-shadow: 0 0 0 10px rgba(0,0,0,0.1);
+    min-height: 50vh;
+  }
+
+  .icon {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba($white, .9);
+    padding: 20px;
+    border-radius: 50%;
+    width: 80px;
+  }
+
+  h1 {
+    margin-bottom: 0;
+    color: white;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 0;
+    font-family: $fontFamily;
+    font-size: 2.375rem;
+  }
+
+  h2,
+  h3 {
+    letter-spacing: 0;
+    font-family: $fontFamily;
+  }
+
+  h2 {
+    float: left;
+    line-height: 25px;
+    font-weight: 500;
+    font-size: .9375rem;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    line-height: 18px;
+    text-align: center;
+    font-size: .625rem;
+    font-weight: 400;
+  }
+
+  .start-game {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    cursor: pointer;
+    color: #FFF;
+    white-space: nowrap;
+    line-height: 40px;
+    padding: 2px 20px;
+    box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+    background: #EAA72E;
+    border-radius: 4px;
+    font-size: 1.125rem;
+    font-family: $fontFamily;
+    font-weight: 300;
+    letter-spacing: .025em;
+    transition: all .15s ease;
+    &:hover {
+      background: $lightBlue;
+    }
+  }
+
+  .score-field {
+    height: 80px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+     h2 {
+      flex: 1;
+     }
+    p {
+      margin-top: 5px;
+      font-weight: 700;
+      font-size: 1.625rem;
+    }
+  }
+
+  .question-icon {
+    float: left;
+    visibility: hidden;
+    vertical-align: middle;
+    height: 23px;
+    margin-right: 8px;
+  }
+
+  .options-field {
+    display: flex;
+    flex-direction: column;
+    .option {
+      text-align: center;
+      cursor: pointer;
+      font-family: Open Sans,sans-serif;
+      background-color: #fff;
+      border: 1px solid #282828;
+      border-radius: 2em;
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      line-height: 1;
+      padding: 15px 20px;
+      -webkit-transition: all .15s;
+      transition: all .15s;
+      color: #282828;
+      margin: 10px;
+      text-transform: uppercase;
+      &:hover {
+        background-color: $lightBlue;
+        color: #FFF;
+      }
+    }
+  }
+
+  .floatUp {
+  animation-name: floatUp;
+  -webkit-animation-name: floatUp;
+  }
+
+  .floatDown {
+  animation-name: floatDown;
+  -webkit-animation-name: floatDown;
+  }
+
+  .floatUp, 
+  .floatDown {
+  animation-duration: 1.7s;	
+  -webkit-animation-duration: 1.7s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  }
+
+  @keyframes floatUp {
+    0% {
+    transform: translateY(0%);	
+    }
+    50% {
+    transform: translateY(8%);	
+    }	
+    100% {
+    transform: translateY(0%);
+    }			
+  }
+
+  @-webkit-keyframes floatUp {
+    0% {
+    -webkit-transform: translateY(0%);	
+    }
+    50% {
+    -webkit-transform: translateY(8%);	
+    }	
+    100% {
+    -webkit-transform: translateY(0%);
+    }			
+  }
+
+  @keyframes floatDown {
+    0% {
+    transform: translateY(0%);	
+    }
+    50% {
+    transform: translateY(-8%);	
+    }	
+    100% {
+    transform: translateY(0%);
+    }			
+  }
+
+  @-webkit-keyframes floatDown {
+    0% {
+    -webkit-transform: translateY(0%);	
+    }
+    50% {
+    -webkit-transform: translateY(8%);	
+    }	
+    100% {
+    -webkit-transform: translateY(0%);
+    }			
+  }
