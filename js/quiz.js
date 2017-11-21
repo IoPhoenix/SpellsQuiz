@@ -13,7 +13,7 @@ let spells = [
         "val" : "Makes invisible ink become visible"
     }, {
         "key" : "Avada Kedavra",
-        "val" : "The Unforgivable Curse, kills your opponent"
+        "val" : "Kills your opponent"
     }, {
         "key" : "Avifors",
         "val" : "Turns things into birds"
@@ -70,7 +70,7 @@ let spells = [
         "val" : "Disarms the target of the spell, such as knocking their wand out of their hand"
     }, {
         "key" : "Fera Verto",
-        "val" : "Transforms animals into water goblets!"
+        "val" : "Transforms animals into water goblets"
     }, {
         "key" : "Ferula",
         "val" : "Binds a broken limb with a splint and bandages, tightly wrapped"
@@ -91,7 +91,7 @@ let spells = [
         "val" : "Causes a person to break out in boils"
     }, {
         "key" : "Geminio",
-        "val" : "Creates a duplicate of an item (a twin, as in the zodiacal sign Gemini)"
+        "val" : "Creates a duplicate of an item"
     }, {
         "key" : "Homorphus",
         "val" : "Makes a werewolf or person disguised as an animal resume their human shape"
@@ -127,7 +127,7 @@ let spells = [
         "val" : "Locks an opponent’s legs together"
     },{
         "key" : "Lumos",
-        "val" : "Creates light, usually by making the tip of the wand glow.  More light can be created using \"lumos maxima\""
+        "val" : "Creates light, usually by making the tip of the wand glow"
     }, {
         "key" : "Mobiliarbus",
         "val" : "Moves a tree from one place to another"
@@ -157,7 +157,7 @@ let spells = [
         "val" : "Makes the user’s wand act like a compass"
     }, {
         "key" : "Portus",
-        "val" : "Turns any item into a Portkey, which can then be used to transport a person or persons to another location."
+        "val" : "Turns any item into a Portkey, which can then be used to transport a person or persons to another location"
     },{
         "key" : "Prior Incantato",
         "val" : "Reveals to you the last spell that a wand was used to cast"
@@ -196,7 +196,7 @@ let spells = [
         "val" : "Causes a person to curl up in laughter, as if being tickled"
     },{
         "key" : "Riddikulus",
-        "val" : "Makes a boggart assume a “ridiculous” form, thereby making it funny instead of terrifying"
+        "val" : "Protects from a boggart by making it funny instead of terrifying"
     }, {
         "key" : "Salvio Hexia",
         "val" : "Strengthens other protective spells, or deflects any hexes cast toward a specific location"
@@ -229,21 +229,24 @@ let spells = [
         "val" : "Removes a stuck object, as in a wad of gum that is stuck in a keyhole"
     }, {
         "key" : "Wingardium Leviosa",
-        "val" : "Allows the user to make an object levitate; the first spell taught in the Harry Potter movies"
+        "val" : "Allows the user to make an object levitate"
     }
 ];
 
 // ============ VARIBALES =================
 
-let numberOfQuestions = 15,
-    numberOfQuestionsLeftField = document.querySelector('.questiions-left'),
-    numberOfCorrectAnswers = document.querySelector('.correct-num').innerHTML,
-    numberOfWrongAnswers = document.querySelector('.wrong-num').innerHTML,
-    score = document.querySelector('.score').innerHTML,
+let startButton = document.querySelector('.start-game'),
+    newGameButton = document.querySelector('.new-game'),
+    numberOfQuestionsLeft = document.querySelector('.questiions-left'),
+    numberOfCorrectAnswers = document.querySelector('.correct-num'),
+    numberOfWrongAnswers = document.querySelector('.wrong-num'),
+    score = document.querySelector('.score'),
+    gameOverField = document.querySelector('.game-over'),
+    totalScore = 0,
     spellsUsed = [],
     currentKey;
 
-const startButton = document.querySelector('.start-game'),
+const gameField = document.querySelector('.game-field'), 
     questionField = document.querySelector('.question-field h2'),
     questionIcon = document.querySelector('.question-icon'),
     optionsField = document.querySelector('.options-field'),
@@ -253,21 +256,32 @@ const startButton = document.querySelector('.start-game'),
 // ============ EVENT LISTENERS =================
 
 startButton.addEventListener('click', startGame);
-    
-
+newGameButton.addEventListener('click', startGame);
     
 
 // ============ FUNCTIONS =================
 
 function startGame() {
+    console.log('game begins');
     spells = _.shuffle(spells);
     this.style.display = 'none';
+
+    if (newGameButton !== null) newGameButton.style.display = 'none';
+    if (gameOverField !== null) gameOverField.style.display = 'none';
+
+    totalScore = 0;
+    score.value = '0/15';
+    numberOfQuestionsLeft.value = 2;
+    numberOfCorrectAnswers.value = 0;
+    numberOfWrongAnswers.value = 0;
     generateQuestion();
     generateOptions();
 }
 
 
 function generateQuestion() {
+    questionField.textContent = '';
+
     const randomIndex = Math.floor(Math.random() * spells.length);
     let randomSpell = spells[randomIndex];
     currentKey = randomSpell.key;
@@ -277,28 +291,28 @@ function generateQuestion() {
     if (spellsUsed.includes(currentKey)) generateQuestion();
     else {
         spellsUsed.push(currentKey);
-        randomSpell = randomSpell.val[0].toLowerCase() + randomSpell.val.slice(1);
         questionIcon.style.visibility = 'visible';
-        let heading = document.createElement("H2"); 
-        heading.textContent = `Spell that ${randomSpell}`;
-        optionsField.appendChild(heading);
-        reduceNumberOfQuestionsLeft();
+        questionField.textContent += `Spell that ${randomSpell.val}`;
     }
-    console.log('spellsUsed: ' + spellsUsed);
 }
 
 
 
 function generateOptions() {
-   const randomKeys = _.shuffle(allKeys).slice(0, 2);
+    optionsField.innerHTML = '';
+
+   let randomKeys = _.shuffle(allKeys).slice(0, 3);
 
    if (!randomKeys.includes(currentKey)) {
+       randomKeys.shift();
        randomKeys.push(currentKey);
+       randomKeys = _.shuffle(randomKeys);
    }
    
-   randomKeys.forEach((key, i) => {
+   _.each(randomKeys, (key, i) => {
        let node = document.createElement("SPAN"); 
        node.textContent = key;
+       node.setAttribute("data-spell", key);
         if (i % 2 == 0) {
             node.className = 'option';
         } else {
@@ -306,12 +320,59 @@ function generateOptions() {
         }
        optionsField.appendChild(node);
    });
+
+   options = document.querySelectorAll('.option');
+   _.each(options, (option) => {
+        option.addEventListener('click', checkAnswer);
+   });
 }
 
 
+function checkAnswer(e) {
+    
+    if (this.getAttribute('data-spell') === currentKey) {
+        this.classList.add('correct-answer');
+        numberOfCorrectAnswers.value++;
+        totalScore++;
+        score.value = `${totalScore}/15`;
+    } else {
+        this.classList.add('wrong-answer');
+        numberOfWrongAnswers.value++;
+    }
+
+    if (numberOfQuestionsLeft.value === '1') {
+        setTimeout(() => { 
+            finishGame();
+        }, 1000);
+        return;
+    }
+
+    setTimeout(() => { 
+        reduceNumberOfQuestionsLeft();
+        this.classList.remove('correct-answer');
+        this.classList.remove('wrong-answer');
+        generateQuestion();
+        generateOptions();
+    }, 1000);
+}
+
 
 function reduceNumberOfQuestionsLeft() {
-    // if (numberOfQuestionsLeft === 0) finishGame();
-    numberOfQuestions--;
-    numberOfQuestionsLeftField.innerHTML = numberOfQuestions;
+    numberOfQuestionsLeft.value--;
+    if (numberOfQuestionsLeft.value === '0') {
+        finishGame();
+    }
+}
+
+function finishGame() {
+    console.log('game finished');
+    numberOfQuestionsLeft.value--;
+    questionField.innerHTML = '';
+    questionIcon.style.visibility = 'hidden';
+    optionsField.innerHTML = '';
+    spellsUsed = [];
+    let answer = totalScore === 1 ? 'answer' : 'answers';
+    gameOverField.innerHTML = `Game finished! <br> You have ${totalScore} correct ${answer} out of 15`;
+    gameOverField.style.display = 'block';
+    newGameButton.style.display = 'block';
 }
