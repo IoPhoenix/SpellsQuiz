@@ -1,36 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background-image: url("background.jpeg");
-  background-color: #FFFFD3;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-color: #55B0A7;
   font-weight: 200;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    background-image: url("background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
 }
 
 .corner-ribbon {
   text-align: center;
-  line-height: 25px;
+  width: 100%;
+  line-height: 22px;
+  font-size: .8125rem;
+  background-color: #e4e462;
+  padding: 10px 0;
+  text-align: center;
   font-weight: 400;
-  font-size: .875rem;
   font-family: "Open Sans", sans-serif;
-  background-color: #55B0A7;
+  background-color: #e4e462;
   position: fixed;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
-  color: #FFF;
-  padding: 15px 50px;
-  top: 14px;
-  right: -72px;
-  -webkit-transform: rotate(43deg);
-  transform: rotate(43deg);
+  color: black;
+  top: 0;
+  right: 0;
+}
+
+.corner-ribbon span {
+  display: inline;
+}
+
+@media screen and (min-width: 768px) {
+  .corner-ribbon span {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .corner-ribbon {
+    width: auto;
+    -webkit-transform: rotate(43deg);
+    transform: rotate(43deg);
+    top: 14px;
+    right: -72px;
+    font-size: .875rem;
+    padding: 15px 50px;
+    line-height: 25px;
+    background-color: #55B0A7;
+    color: #FFF;
+  }
 }
 
 .header {
   width: 100%;
+  margin-top: 15%;
   text-align: center;
+  height: 30vh;
 }
 
 .header svg {
+  transform: translateY(-55%);
   display: block;
   margin: 0 auto;
 }
@@ -42,21 +81,36 @@ body {
   fill: #FFF;
 }
 
+@media screen and (min-width: 768px) {
+  .header {
+    margin-top: 5%;
+  }
+}
+
 .quiz-container {
   position: relative;
   margin: 0 auto;
-  width: 50%;
-  padding: 20px 30px;
+  width: 100%;
+  padding: 10px 0;
   background: rgba(255, 255, 255, 0.85);
   box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
   min-height: 50vh;
 }
 
+@media screen and (min-width: 768px) {
+  .quiz-container {
+    width: 70%;
+    padding: 20px 30px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .quiz-container {
+    width: 50%;
+  }
+}
+
 .icon {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 50%;
@@ -123,7 +177,7 @@ button.start-game {
 }
 
 .score-field {
-  height: 80px;
+  padding: 0 0 20px 0;
   margin-bottom: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: flex;
@@ -141,18 +195,31 @@ button.start-game {
   border: none;
   margin-top: 5px;
   font-weight: 700;
-  font-size: 1.625rem;
+  font-size: 1.125rem;
+}
+
+@media screen and (min-width: 768px) {
+  .score-field input {
+    font-size: 1.625rem;
+  }
 }
 
 .game-field {
+  padding: 0 15px;
   text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .game-field {
+    padding: 0;
+  }
 }
 
 .game-field .game-over {
   display: none;
   text-align: center;
   font-weight: 600;
-  padding-top: 7%;
+  padding-top: 5%;
 }
 
 .game-field .new-game {
@@ -161,9 +228,10 @@ button.start-game {
 
 .question-field {
   text-align: left;
+  margin-bottom: 2%;
 }
 
-.question-icon {
+.question-field .question-icon {
   float: left;
   visibility: hidden;
   vertical-align: middle;

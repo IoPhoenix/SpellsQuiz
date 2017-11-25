@@ -1,38 +1,85 @@
 $fontFamily: 'Open Sans', sans-serif;
 $white: #FFF;
 $lightBlue: #55B0A7;
+$lightYellow: #FFFE79;
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+@mixin tablet {
+  @media screen and (min-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
 
 body {
-    background-image: url('background.jpeg');
-    background-color: #FFFFD3;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-color: $lightBlue;
     font-weight: 200;
+
+    @include tablet {
+      background-image: url('background.jpeg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
   }
 
   .corner-ribbon {
     text-align: center;
-    line-height: 25px;
+    width: 100%;
+    line-height: 22px;
+    font-size: .8125rem;
+    background-color: #e4e462;
+    padding: 10px 0;
+    text-align: center;
     font-weight: 400;
-    font-size: .875rem;
     font-family: $fontFamily;
-    background-color: $lightBlue;
+    background-color: #e4e462;
     position: fixed;
     box-shadow: 0 0 3px rgba(0,0,0,.7);
-    color: #FFF;
-    padding: 15px 50px;
-    top: 14px;
-    right: -72px;
-    -webkit-transform: rotate(43deg);
-    transform: rotate(43deg);
+    color: black;
+    top: 0;
+    right: 0;
+
+    span {
+      display: inline;      
+      @include tablet {
+        display: block;
+      }
+    }
+
+    @include tablet {
+      width: auto;
+      -webkit-transform: rotate(43deg);
+      transform: rotate(43deg);
+      top: 14px;
+      right: -72px;
+      font-size: .875rem;
+      padding: 15px 50px;
+      line-height: 25px;
+      background-color: $lightBlue;
+      color: $white;
+    }
   }
 
   .header {
     width: 100%;
+    margin-top: 15%;
     text-align: center;
+    height: 30vh;
      svg {
+      transform: translateY(-55%);
       display: block;
       margin: 0 auto;
      }
@@ -42,23 +89,32 @@ body {
       font-size: 1.85rem;
       fill: #FFF;
     }
+
+    @include tablet {
+      margin-top: 5%;
+    }
   }
 
   .quiz-container {
     position: relative;
     margin: 0 auto;
-    width: 50%;
-    padding: 20px 30px;
+    width: 100%;
+    padding: 10px 0;
     background: rgba($white, 0.85);
     box-shadow: 0 0 0 10px rgba(0,0,0,0.1);
     min-height: 50vh;
+
+    @include tablet {
+      width: 70%;
+      padding: 20px 30px;
+    }
+
+    @include desktop {
+      width: 50%;
+    }
   }
 
   .icon {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
     background: rgba($white, .9);
     padding: 20px;
     border-radius: 50%;
@@ -124,7 +180,7 @@ body {
   }
 
   .score-field {
-    height: 80px;
+    padding: 0 0 20px 0;
     margin-bottom: 10px;
     border-bottom: 1px solid rgba(0,0,0,0.2);
     display: flex;
@@ -139,17 +195,27 @@ body {
       border: none;
       margin-top: 5px;
       font-weight: 700;
-      font-size: 1.625rem;
+      font-size: 1.125rem;
+
+      @include tablet {
+        font-size: 1.625rem;
+      }
     }
   }
 
   .game-field {
+    padding: 0 15px;
     text-align: center;
+
+    @include tablet {
+      padding: 0;
+    }
+
     .game-over {
       display: none;
       text-align: center;
       font-weight: 600;
-      padding-top: 7%;
+      padding-top: 5%;
     }
     .new-game {
       display: none;
@@ -158,14 +224,15 @@ body {
 
   .question-field {
     text-align: left;
-  }
+    margin-bottom: 2%;
 
-  .question-icon {
-    float: left;
-    visibility: hidden;
-    vertical-align: middle;
-    height: 23px;
-    margin-right: 8px;
+    .question-icon {
+      float: left;
+      visibility: hidden;
+      vertical-align: middle;
+      height: 23px;
+      margin-right: 8px;
+   }
   }
 
   .options-field {
@@ -195,7 +262,7 @@ body {
         color: #FFF;
       }
       &.correct-answer {
-        background: #FFFE79;
+        background: $lightYellow;
         color: #000000;
       }
       &.wrong-answer {

@@ -271,7 +271,7 @@ function startGame() {
 
     totalScore = 0;
     score.value = '0/15';
-    numberOfQuestionsLeft.value = 2;
+    numberOfQuestionsLeft.value = 5;
     numberOfCorrectAnswers.value = 0;
     numberOfWrongAnswers.value = 0;
     generateQuestion();
@@ -329,7 +329,11 @@ function generateOptions() {
 
 
 function checkAnswer(e) {
-    
+
+    _.each(options, (option) => {
+        option.style.pointerEvents = 'none';
+    });
+
     if (this.getAttribute('data-spell') === currentKey) {
         this.classList.add('correct-answer');
         numberOfCorrectAnswers.value++;
@@ -354,6 +358,7 @@ function checkAnswer(e) {
         generateQuestion();
         generateOptions();
     }, 1000);
+
 }
 
 
