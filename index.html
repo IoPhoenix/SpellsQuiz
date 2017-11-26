@@ -32,14 +32,14 @@
 
   <div class="quiz-container">
     <div class="score-field">
-      <h3>QUESTIONS LEFT <input readonly type="text" value="15" class="questiions-left"></h3>
+      <h3>QUESTIONS LEFT <input readonly type="text" value="0" class="questions-left"></h3>
       <h3>CORRECT <input readonly type="text" value="0" class="correct-num"></h3>
       <h3>WRONG <input readonly type="text" value="0" class="wrong-num"></h3>
-      <h3>SCORE <input readonly type="text" value="0/15" class="score"></h3> 
+      <h3>SCORE <input readonly type="text" value="0/0" class="score"></h3> 
+      <h3>TIMER <input readonly type="text" value="00:00" class="timer"></h3> 
     </div>
 
     <div class="game-field">
-      <button class="start-game">START</button>
       <div class="question-field">
           <svg class="question-icon" focusable="false" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Question">
             <path d="M12 .88C5.38.88 0 5.31 0 10.76c0 2.57 1.18 4.99 3.33 6.83L.92 22.4c-.1.19-.06.42.08.57.1.1.23.15.36.15.07 0 .15-.01.21-.04l6.44-3c1.28.37 2.62.56 3.99.56 6.62 0 12-4.43 12-9.88S18.62.88 12 .88zm0 18.76c-1.34 0-2.64-.19-3.88-.57-.12-.04-.25-.03-.36.03l-5.31 2.47 1.95-3.89c.1-.21.05-.46-.14-.61C2.16 15.39 1 13.15 1 10.76c0-4.9 4.94-8.88 11-8.88 6.07 0 11 3.98 11 8.88s-4.93 8.88-11 8.88zm4-10.73c0 1.74-1.31 3.19-3 3.43v.78c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-1.24c0-.28.22-.5.5-.5 1.38 0 2.5-1.11 2.5-2.47 0-1.37-1.12-2.47-2.5-2.47C11.15 6.44 10 7.61 10 9c0 .28-.22.5-.5.5S9 9.28 9 9c0-1.96 1.57-3.56 3.5-3.56S16 6.99 16 8.91zm-2.5 6.47c0 .55-.45 1-1 1s-1-.45-1-1c0-.56.45-1 1-1s1 .44 1 1z"></path>
@@ -47,14 +47,15 @@
           <h2></h2>
       </div>
 
-      <div class="options-field">
-        <!-- <span class="option">Spell</spsn> -->
-      </div> <!-- /.options-field -->
+      <div class="options-field"></div>
 
-      <h2 class="game-over"></h2>
-      <button class="new-game">New game</button>
+        <h2 class="game-text">Choose level to start a new game</h2>
+        <button class="start" data-level="easy">Easy level</button>
+        <button class="start" data-level="easy">Difficult level</button>
+    
     </div> <!-- /.game-field -->
   </div> <!-- /.quiz-container -->
+
 
   <script src="js/underscore.min.js"></script>
   <script src="js/quiz.js"></script>

@@ -235,28 +235,35 @@ let spells = [
 
 // ============ VARIBALES =================
 
-let startButton = document.querySelector('.start-game'),
+let startButton = document.querySelectorAll('.start'),
     newGameButton = document.querySelector('.new-game'),
-    numberOfQuestionsLeft = document.querySelector('.questiions-left'),
+    numberOfQuestionsLeft = document.querySelector('.questions-left'),
     numberOfCorrectAnswers = document.querySelector('.correct-num'),
     numberOfWrongAnswers = document.querySelector('.wrong-num'),
     score = document.querySelector('.score'),
+    timer = document.querySelector('.timer'),
     gameOverField = document.querySelector('.game-over'),
     totalScore = 0,
     spellsUsed = [],
-    currentKey;
+    easyGameTime,
+    difficultGameTime,
+    currentKey,
+    timerFunction,
+    gameLevel;
 
 const gameField = document.querySelector('.game-field'), 
     questionField = document.querySelector('.question-field h2'),
     questionIcon = document.querySelector('.question-icon'),
     optionsField = document.querySelector('.options-field'),
+    gameText = document.querySelector('.game-text');
     allKeys = _.pluck(spells, 'key');
 
 
 // ============ EVENT LISTENERS =================
 
-startButton.addEventListener('click', startGame);
-newGameButton.addEventListener('click', startGame);
+startButton.forEach(btn => {
+    btn.addEventListener('click', startGame);    
+});
     
 
 // ============ FUNCTIONS =================
@@ -264,30 +271,71 @@ newGameButton.addEventListener('click', startGame);
 function startGame() {
     console.log('game begins');
     spells = _.shuffle(spells);
-    this.style.display = 'none';
 
-    if (newGameButton !== null) newGameButton.style.display = 'none';
+    // clear the game field
+    startButton.forEach(btn => btn.style.display = 'none');
     if (gameOverField !== null) gameOverField.style.display = 'none';
+    gameText.style.display = 'none';
+    gameText.style.visibility = 'hidden';
 
+    // set the initial values based on level of game complexity
+    gameLevel = this.getAttribute("data-level");
+    if (gameLevel === 'easy') {
+        easyGameTime = 1;
+        timer.value = easyGameTime;
+        score.value = '0/15';
+        numberOfQuestionsLeft.value = 15;
+    } else {
+        difficultGameTime = 60;
+        timer.value = difficultGameTime;
+        score.value = '0/25';
+        numberOfQuestionsLeft.value = 25;
+    }
+
+    // set initial values to zeros
     totalScore = 0;
-    score.value = '0/15';
-    numberOfQuestionsLeft.value = 5;
     numberOfCorrectAnswers.value = 0;
     numberOfWrongAnswers.value = 0;
+
+    // generate quiz and start timer
     generateQuestion();
     generateOptions();
+    timerFunction = setInterval(startTimer, 1000);
+}
+        
+
+
+function startTimer() {
+    if (gameLevel === 'easy') {
+        easyGameTime--;
+        timer.value = easyGameTime;
+    } else {
+        difficultGameTime--;
+        timer.value = difficultGameTime;
+    }
+    if (easyGameTime < 0 || difficultGameTime < 0) {
+        clearInterval(timerFunction);
+        timer.value = 0;
+        finishGame();
+    }
 }
 
 
 function generateQuestion() {
+    // finish game if all queastions are answered
+    if (numberOfQuestionsLeft.value === 0) {
+        finishGame();
+        clearInterval(timerFunction);
+    }
+
     questionField.textContent = '';
 
+    // generate random question
     const randomIndex = Math.floor(Math.random() * spells.length);
     let randomSpell = spells[randomIndex];
     currentKey = randomSpell.key;
-    console.log('currentKey: ' + currentKey);
 
-    // check that it hasn't been used before
+    // check that current spell hasn't been used before
     if (spellsUsed.includes(currentKey)) generateQuestion();
     else {
         spellsUsed.push(currentKey);
@@ -330,6 +378,7 @@ function generateOptions() {
 
 function checkAnswer(e) {
 
+    // prevent buttons from clicking on them
     _.each(options, (option) => {
         option.style.pointerEvents = 'none';
     });
@@ -344,7 +393,7 @@ function checkAnswer(e) {
         numberOfWrongAnswers.value++;
     }
 
-    if (numberOfQuestionsLeft.value === '1') {
+    if (numberOfQuestionsLeft.value === '1' || timer.value === '1' || timer.value === 0) {
         setTimeout(() => { 
             finishGame();
         }, 1000);
@@ -377,7 +426,8 @@ function finishGame() {
     optionsField.innerHTML = '';
     spellsUsed = [];
     let answer = totalScore === 1 ? 'answer' : 'answers';
-    gameOverField.innerHTML = `Game finished! <br> You have ${totalScore} correct ${answer} out of 15`;
-    gameOverField.style.display = 'block';
-    newGameButton.style.display = 'block';
+    gameText.innerHTML = `Game finished! <br> You have ${totalScore} correct ${answer} out of 15`;
+    gameText.style.display = 'block';
+    gameText.style.visibility = 'visible';
+    startButton.forEach(btn => btn.style.display = 'block');
 }

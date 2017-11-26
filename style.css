@@ -23,12 +23,11 @@ body {
   width: 100%;
   line-height: 22px;
   font-size: .8125rem;
-  background-color: #e4e462;
   padding: 10px 0;
   text-align: center;
   font-weight: 400;
   font-family: "Open Sans", sans-serif;
-  background-color: #e4e462;
+  background-color: #FFFE79;
   position: fixed;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
   color: black;
@@ -148,6 +147,8 @@ h3 {
 }
 
 button {
+  width: 60%;
+  display: block;
   margin: 0 auto;
   text-transform: uppercase;
   cursor: pointer;
@@ -158,22 +159,22 @@ button {
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   background: #EAA72E;
   border-radius: 4px;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   letter-spacing: .025em;
   transition: all .15s ease;
+  margin: 15px auto;
 }
 
 button:hover {
   background: #55B0A7;
 }
 
-button.start-game {
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+@media screen and (min-width: 768px) {
+  button {
+    width: 45%;
+  }
 }
 
 .score-field {
@@ -215,15 +216,11 @@ button.start-game {
   }
 }
 
-.game-field .game-over {
-  display: none;
+.game-field .game-text {
   text-align: center;
   font-weight: 600;
-  padding-top: 5%;
-}
-
-.game-field .new-game {
-  display: none;
+  padding-top: 2%;
+  visibility: hidden;
 }
 
 .question-field {
@@ -248,7 +245,7 @@ button.start-game {
 .options-field .option {
   text-align: center;
   cursor: pointer;
-  font-family: Open Sans,sans-serif;
+  font-family: "Open Sans", sans-serif;
   background-color: #fff;
   border: 1px solid #282828;
   border-radius: 2em;
